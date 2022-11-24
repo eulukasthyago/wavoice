@@ -8,7 +8,11 @@ class Sender {
 	}
 
 	async sendText(to: string, body: string) {
-		this.client?.sendText(to, body);
+			await this.client?.sendVoice(to, body).then((result: any) => {
+				console.log('Foi', result);
+			}).catch((error: string) => {
+				console.log('Deu erro', error);
+			});
 	}
 
 	private initialize() {
@@ -21,12 +25,14 @@ class Sender {
 
 		const start = (client: Whatsapp) => {
 			this.client = client;
-			this.sendText('5514991254954@c.us', "Olá tudo bem, esse é um teste");
-			console.log(client);
+			this.sendText('5514991254954@c.us', "/home/eulukasthyago/Documentos/projetos/Node/wavoice/assets/audio.mp3");
 		}
 
-		create('wavoice', qr, undefined,)
-		.then((client) => start(client))
+		create('wavoice', qr, undefined)
+		.then((client) => {
+			start(client);
+// 			console.log("Teste", client);
+		})
 		.catch((error) => console.error(error));
 	}
 }
